@@ -52,6 +52,10 @@ import com.android.settingslib.core.instrumentation.Instrumentable;
 import com.android.settingslib.drawer.Tile;
 import com.android.settingslib.search.SearchIndexable;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 @SearchIndexable(forTarget = MOBILE)
 public class TopLevelSettings extends DashboardFragment implements SplitLayoutListener,
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
@@ -66,6 +70,24 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     private boolean mScrollNeeded = true;
     private boolean mFirstStarted = true;
     private ActivityEmbeddingController mActivityEmbeddingController;
+
+    private static final Set<String> EXCLUDE_TINT_SET =
+            new HashSet<>(Arrays.asList(
+                    "top_level_network",
+                    "top_level_connected_devices",
+                    "top_level_apps",
+                    "top_level_battery",
+                    "top_level_storage",
+                    "top_level_sound",
+                    "top_level_display",
+                    "top_level_wallpaper",
+                    "top_level_accessibility",
+                    "top_level_security",
+                    "top_level_privacy",
+                    "top_level_location",
+                    "top_level_emergency",
+                    "top_level_accounts",
+                    "top_level_system"));
 
     public TopLevelSettings() {
         final Bundle args = new Bundle();
@@ -197,13 +219,16 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         super.onCreatePreferences(savedInstanceState, rootKey);
-        int tintColor = Utils.getHomepageIconColor(getContext());
-        iteratePreferences(preference -> {
-            Drawable icon = preference.getIcon();
-            if (icon != null) {
-                icon.setTint(tintColor);
-            }
-        });
+        //TODO: maybe here?
+         int tintColor = Utils.getHomepageIconColor(getContext());
+         iteratePreferences(preference -> {
+             if (!EXCLUDE_TINT_SET.contains(preference.getKey())) {
+                 Drawable icon = preference.getIcon();
+                 if (icon != null) {
+                     icon.setTint(tintColor);
+                 }
+             }
+         });
     }
 
     @Override

@@ -234,7 +234,8 @@ public class HighlightableTopLevelPreferenceAdapter extends PreferenceGroupAdapt
         ((TextView) v.findViewById(android.R.id.summary)).setTextColor(mSummaryColorHighlight);
         final Drawable drawable = ((ImageView) v.findViewById(android.R.id.icon)).getDrawable();
         if (drawable != null) {
-            drawable.setTint(mIconColorHighlight);
+            // Exclude this to show MS overlay
+            // drawable.setTint(mIconColorHighlight);
         }
     }
 
@@ -245,7 +246,8 @@ public class HighlightableTopLevelPreferenceAdapter extends PreferenceGroupAdapt
         ((TextView) v.findViewById(android.R.id.summary)).setTextColor(mSummaryColorNormal);
         final Drawable drawable = ((ImageView) v.findViewById(android.R.id.icon)).getDrawable();
         if (drawable != null) {
-            drawable.setTint(mIconColorNormal);
+            // Exclude this to show MS overlay
+            // drawable.setTint(mIconColorNormal);
         }
     }
 
